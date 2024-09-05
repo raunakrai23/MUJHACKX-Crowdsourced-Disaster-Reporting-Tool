@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Admin Dashboard</h1>
+    <h2>Disaster Reports</h2>
+
+    <!-- Wrap the table in a scrollable div with defined height -->
+    <div class="scrollable-table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Report ID</th>
+                    <th>Username</th>
+                    <th>Location</th>
+                    <th>Disaster Type</th>
+                    <th>Description</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                <tr>
+                    <td>{{ report[0] }}</td>
+                    <td>{{ report[1] }}</td>
+                    <td>{{ report[2] }}</td>
+                    <td>{{ report[3] }}</td>
+                    <td>{{ report[4] }}</td>
+                    <td>{{ report[5] }}</td>
+                    <td>{{ report[6] }}</td>
+                    <td>{{ report[7] }}</td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Disaster Location Map</h2>
+    <iframe src="/static/map.html" width="100%" height="500px"></iframe>
+{% endblock %}

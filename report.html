@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Submit a Disaster Report</h1>
+    <form method="POST" action="/report" id="disasterReportForm">
+        <label for="user_id">Your User ID:</label>
+        <input type="text" id="user_id" name="user_id" required><br>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required><br>
+
+        <label for="disaster_type">Disaster Type:</label>
+        <input type="text" id="disaster_type" name="disaster_type" required><br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea><br>
+
+        <!-- Hidden inputs for latitude and longitude -->
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+
+        <input type="submit" value="Submit Report" class="btn">
+    </form>
+
+    <script>
+        // JavaScript to capture user's location
+        const form = document.getElementById('disasterReportForm');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission until we have location
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(success, error);
+            } else {
+                alert('Geolocation is not supported by this browser.');
+                form.submit(); // Fallback to submit the form if geolocation is not supported
+            }
+
+            function success(position) {
+                // Get the latitude and longitude from the position object
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+                form.submit(); // Now submit the form with the location data
+            }
+
+            function error() {
+                alert('Unable to retrieve your location');
+                form.submit(); // Fallback to submit the form even if location access is denied
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Chat with User {{ receiver_id }}</h1>
+
+    <div class="message-container">
+        {% for message in messages %}
+            <div class="message">
+                <strong>{{ message[1] }}</strong>: {{ message[3] }} <br>
+                <small>{{ message[4] }}</small>
+            </div>
+        {% endfor %}
+    </div>
+
+    <form method="POST" action="/messages/{{ receiver_id }}">
+        <input type="hidden" name="sender_id" value="{{ session['user_id'] }}">
+        <textarea name="message" rows="3" required></textarea><br>
+        <input type="submit" value="Send" class="btn">
+    </form>
+{% endblock %}
